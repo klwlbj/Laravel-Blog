@@ -141,6 +141,10 @@ return [
          * Laravel Framework Service Providers...
          */
         Illuminate\Auth\AuthServiceProvider::class,
+
+        Laravel\Scout\ScoutServiceProvider::class, //Scout
+        ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
+
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,

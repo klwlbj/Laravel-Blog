@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Comment;
 use Illuminate\Http\Request;
 use \App\Post; //App前加\表示根目录，App不是app
-use \App\User;
+use \App\Zan;
 
 class PostController extends Controller
 {
     //列表
     public function index(){
-        $posts = Post::orderBy('created_at','desc')->withCount('comments')->paginate(10);
+        $posts = Post::orderBy('created_at','desc')->withCount('comments','zans')->paginate(10);
 
         return view('post/index',compact('posts')); //第二个参数放变量
     }
@@ -78,6 +78,29 @@ class PostController extends Controller
         $post->comments()->save($comment);
 
         return back(); //直接返回
+    }
+    public function zan(post $post){
+        $param = [
+            'user_id' => \Auth::id(),
+            'post_id' => $post->id,
+        ];
+        Zan::firstOrCreate($param);//先查找，没有则创建
+        return back();
+    }
+    public function unzan(post $post){
+        $post->zan(\Auth::id())->delete();
+        return back();
+    }
+    function search(){
+//        验证
+        $this->validate(\request(),[
+            'query'=>'required',
+        ]);
+//        逻辑
+        $query = \request('query');
+        $posts = \App\Post::search($query)->paginate(2);
+//        渲染
+        return view('post.search',compact('posts','query'));
     }
 
 }
