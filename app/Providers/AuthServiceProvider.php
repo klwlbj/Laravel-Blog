@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use function foo\func;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -26,6 +27,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        $permissions = \App\AdminPermission::all();//获取所有权限
+        foreach ($permissions as $permission)//对每个权限定义门卫
+        {
+            Gate::define($permission->name,function($user)use($permission){
+                return $user->hasPermission($permission);
+            });
+        }
     }
 }

@@ -15,14 +15,13 @@
                         <div class="box-body">
                             <form action="/admin/users/{{$user->id}}/role" method="POST">
                                 {{csrf_field()}}
-
-
                                 <div class="form-group">
                                     @foreach($roles as $role)
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" name="roles[]"
-                                                   @if($myRoles->contains($role))checked
+                                                   @if($myRoles->contains($role))
+                                                   checked
                                                    @endif
                                                    value="{{$role->id}}">
                                             {{$role->name}}

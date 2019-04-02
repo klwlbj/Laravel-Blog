@@ -9,7 +9,8 @@ class AdminRole extends Model
     protected  $table = 'admin_roles';
     //当前角色的所有权限
     function permissions(){
-        return $this->belongsToMany(\App\AdminPermission::class,'admin_permission_role','role_id','permission_id')->withPivot(['permission_id','role_id']);
+//        return $this->belongsToMany(\App\AdminPermission::class,'admin_permission_role','role_id','permission_id')->withPivot(['permission_id','role_id']);
+        return $this->belongsToMany(\App\AdminPermission::class, 'admin_permission_role', 'permission_id', 'role_id')->withPivot(['permission_id', 'role_id']);
 
     }
     //给角色賦予權限

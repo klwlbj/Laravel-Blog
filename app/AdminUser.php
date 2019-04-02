@@ -16,11 +16,13 @@ class AdminUser extends Auth
     }
     //判断一个用戶是否在某人角色里
     function isInRoles($roles){
-        return !!$roles->intersect($this->roles())->count();
+        return !! $roles->intersect($this->roles)->count();
         //加!!,显示bool值，true或false,
     }
     //给用戶分配角色
-    function assignRole($role){
+    public function assignRole($roleName)
+    {
+        $role = \App\AdminRole::where('name', $roleName)->first();
         return $this->roles()->save($role);
     }
     function deleteRole($role){

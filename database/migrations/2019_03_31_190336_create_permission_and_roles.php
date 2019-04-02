@@ -28,7 +28,7 @@ class CreatePermissionAndRoles extends Migration
             $table->timestamps();
         });
         //权限角色表
-        Schema::create('admin_permissions_role', function (Blueprint $table) {
+        Schema::create('admin_permission_role', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('role_id');
             $table->integer('permission_id');
@@ -51,7 +51,7 @@ class CreatePermissionAndRoles extends Migration
     {
         Schema::dropIfExists('admin_roles');
         Schema::dropIfExists('admin_permissions');
-        Schema::dropIfExists('admin_permissions_role');
+        Schema::dropIfExists('admin_permission_role');
         Schema::dropIfExists('admin_role_user');
     }
 }

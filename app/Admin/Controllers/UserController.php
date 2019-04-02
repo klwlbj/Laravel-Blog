@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\AdminRole;
 use \App\AdminUser; //引入模型
+use Illuminate\Http\Request;
 class UserController extends Controller{
     //管理员列表
     function  index(){
@@ -42,19 +43,21 @@ class UserController extends Controller{
     function storeRole(AdminUser $user){
         //验证
         $this->validate(request(),[
-            'roles' => 'required|array',
+            'roles' => 'required|array'
         ]);
-        $roles = \App\AdminRole::findMany(request('roles'));
-        $myRoles = $user->role;
-        //增加
+//        dd(\request('role'));
+        $roles = \App\AdminRole::find(request('roles'));
+        $myRoles = $user->roles;
+
+        // 对已经有的权限
         $addRoles = $roles->diff($myRoles);
-        foreach ($addRoles as $role){
-            $user->assignRole($role);
+        foreach ($addRoles as $role) {
+            $user->roles()->save($role);
         }
-        //删除
+
         $deleteRoles = $myRoles->diff($roles);
-        foreach ($deleteRoles as $role){
-            $user->deleteRole($role);
+        foreach ($deleteRoles as $role) {
+            $user->roles()->detach($role);
         }
         return back();
 
