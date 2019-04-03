@@ -59,4 +59,18 @@ class User extends Authenticatable
     function hasStar($uid){
         return $this->fans()->where('fan_id', $uid)->count();
     }
+    //用户收到的通知
+    public function notices()
+    {
+        return $this->belongsToMany(\App\Notice::class, 'user_notice', 'user_id', 'notice_id')->withPivot(['user_id', 'notice_id']);
+    }
+
+    /*
+     * 增加通知
+     */
+    public function addNotice($notice)
+    {
+        return $this->notices()->save($notice);
+    }
+
 }

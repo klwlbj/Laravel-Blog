@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 //文章模块
@@ -49,6 +49,8 @@ Route::get('/posts/{post}/unzan','\App\Http\Controllers\PostController@unzan');/
 //专题详情页
 Route::get('/topic/{topic}','\App\Http\Controllers\TopicController@show');
 Route::post('/topic/{topic}/submit','\App\Http\Controllers\TopicController@submit');//提交评论
+//通知
+Route::get('/notices','\App\Http\Controllers\NoticeController@index');
 
 
 include_once ('admin.php');
